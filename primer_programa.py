@@ -107,6 +107,9 @@ def programa():
             print("opcion invalida")
 
 
-menu_impreso()
+def main():
+    menu_impreso()
+    # programa()
 
-programa()
+
+main()
