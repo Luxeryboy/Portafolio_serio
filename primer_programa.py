@@ -2,38 +2,43 @@
 # -*- coding: utf-8 -*-
 
 
-def formato_sin_espacios(texto_o_palabra: str) -> str:
-    """Aqui le damos un formato sin mayusculas, quitamos espacios al principio y
-    final y ademas los espacios los entermedio los eliminamos.
-
-    :param texto_o_palabra: string a eliminar espacios
-    :return: Palabra sin espacios
-    """
-
-    formateado = texto_o_palabra.lower().strip().replace(" ", "")
-    return f"{formateado}"
+def quitar_espacios(texto: str) -> str:
+    formateado: str = texto.replace(" ", "")
+    return formateado
 
 
-def menu_impreso():
-    print("Escribe 1 para ingresar usuario: ")
+def cambiar_a_minuscula(texto: str) -> str:
+    formateado: str = texto.lower()
+    return formateado
+
+
+def formatear_texto(texto: str) -> str:
+    texto_sin_espacios: str = quitar_espacios(texto)
+    texto_en_minuscula: str = cambiar_a_minuscula(texto_sin_espacios)
+    return texto_en_minuscula
+
+
+def mostrar_menu() -> None:
+    print("Escriba 1 para ingresar usuario: ")
     print("Escriba 2 para buscar usuario:")
     print("Escriba 3 para eliminar usario:")
     print("Escriba 4 Para salir:")
 
 
-def evaluando_espacios(palabra):
-    contador = 0
-    palabra_registrada = ""
-    cambio = True
+def evaluando_espacios(palabra: str) -> None:
+    contador: int = 0
+    palabra_registrada: str = ""
+
+    cambio: bool = True
     while cambio:
-        for x in palabra:
-            if x.isspace():
+        for letra in palabra:
+            if letra.isspace():  # if letra == " "
                 contador += 1
                 print("Contraseña no debe tener espacios")
                 palabra = input("Reintentelo de nuevo sin espacios:\n")
                 break
-            elif x.isspace() == False:
-                palabra_registrada += x
+            else:
+                palabra_registrada += letra
             if contador == 0:
                 cambio = False
     return palabra_registrada
@@ -59,26 +64,39 @@ def configurando_sexo(el_sexo):
             el_sexo = input("por favor debe tener un digito y ser m o f").lower()
 
 
-def programa():
-    # Variables importantes
-    nombre = ""
-    sexo = ""
-    contraseña = ""
-    evaluando = True
-
+def seleccionar_opcion() -> int:
+    mensaje = "Seleccione una opción"
+    mensaje_error = "Valor inválido.\n"
     while True:
-        try:
-            opcion = int(input())
-            break
-        except:
-            print("Debe escribir numero")
-            menu_impreso()
+        mostrar_menu()
+        input_de_usuario_sin_limpiar: str = input(mensaje)
+
+        # TODO: isdecimal() vs isnumeric() vs isdigit()
+        if not input_de_usuario_sin_limpiar.isdecimal():
+            print(mensaje_error)
+            continue
+
+        input_de_usuario: int = int(input_de_usuario_sin_limpiar)
+        if input_de_usuario < 1 or input_de_usuario > 4:
+            print(mensaje_error)
+            continue
+
+        return input_de_usuario
+
+
+def programa() -> None:
+    nombre: str = ""
+    sexo: str = ""
+    contraseña: str = ""
+    evaluando: bool = True
+
+    opcion: int = seleccionar_opcion()
 
     match opcion:
         case 1:
             # Paso uno registro nombre:
             nombre_a_ingresar = input("Creale un nombre al usuario:\n")
-            nombre = formato_sin_espacios(nombre_a_ingresar)
+            nombre = quitar_espacios(nombre_a_ingresar)
             print(f"Este es tu nombre de usuario:{nombre}")
 
             # paso registro de sexo:
@@ -108,8 +126,7 @@ def programa():
 
 
 def main():
-    menu_impreso()
-    # programa()
+    programa()
 
 
 main()
