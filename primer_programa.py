@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 
 
-def formato_sin_espacios(texto_o_palabra):
-    """Aqui le damos un formato
-    sin mayusculas, quitamos espacios
-    al principio y final
-    y ademas los espacios los
-    entermedio los eliminamos"""
+def formato_sin_espacios(texto_o_palabra: str) -> str:
+    """Aqui le damos un formato sin mayusculas, quitamos espacios al principio y
+    final y ademas los espacios los entermedio los eliminamos.
+
+    :param texto_o_palabra: string a eliminar espacios
+    :return: Palabra sin espacios
+    """
+
     formateado = texto_o_palabra.lower().strip().replace(" ", "")
     return f"{formateado}"
 
@@ -108,4 +110,3 @@ def programa():
 menu_impreso()
 
 programa()
-
